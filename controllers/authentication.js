@@ -34,11 +34,11 @@ exports.signin = (req, res) => {
     const {phoneNumber, password} = req.body;
 
     User.findOne( { phoneNumber }, (err, user) => {
-        // if(err || !user){
-        //     return res.status(400).json({
-        //         error : "User Not Found"
-        //     });
-        // }
+        if(err || !user){
+            return res.status(400).json({
+                error : "User Not Found"
+            });
+        }
 
         if(!user.authenticate(password)){
             return res.status(401).json({
