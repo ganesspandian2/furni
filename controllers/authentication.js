@@ -7,12 +7,7 @@ exports.signup = (req, res) => {
 
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            error : errors.array()[0].msg,
-            err : errors.array()[0].param
-        });
-    }
+    validator(errors, res);
 
     const user = new User(req.body);
     user.save((err, user) => {
@@ -34,12 +29,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            error : errors.array()[0].msg,
-            err : errors.array()[0].param
-        });
-    }
+    validator(errors, res);
 
     const {phoneNumber, password} = req.body;
 
@@ -71,4 +61,11 @@ exports.signOut = (req, res) => {
     res.json({ user: 'Sign Out Guys' });
 }
 
-
+function validator(errors, res) {
+    if(!errors.isEmpty()) {
+        return res.status(400).json({
+            error : errors.array()[0].msg,
+            err : errors.array()[0].param
+        });
+    }
+}
