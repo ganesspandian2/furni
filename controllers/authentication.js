@@ -17,11 +17,16 @@ exports.signup = (req, res) => {
             });
         } 
 
-        res.json({
+        const token = jwt.sign({ _id : user._id }, process.env.SECRET);
+        res.cookie("token", token, {expire : new Date() + 365});
+
+        return res.json({
             name : user.name,
             phoneNumber : user.phoneNumber,
             id : user._id
         });
+
+        
     } )
 
 }

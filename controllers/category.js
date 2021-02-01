@@ -59,3 +59,19 @@ exports.updateCategory = (req, res) => {
     })
     
 }
+
+exports.removeCategory = (req, res) => {
+    const category = req.category;
+
+    category.remove((err, category) => {
+        if (err) {
+            return res.status(400).json({
+                error : "Unable to remove the Category"
+            })
+        }
+
+        res.json({
+            message : "Deleted"
+        });
+    });
+}

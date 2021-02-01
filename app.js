@@ -10,6 +10,8 @@ const cors = require('cors')
 const authenticationRoutes = require("./routes/authentication")
 const userRoutes = require("./routes/user")
 const categoryRoutes = require("./routes/category")
+const productRoutes = require("./routes/product")
+
 
 mongoose.connect(process.env.DB_HOST, 
     {
@@ -26,6 +28,8 @@ app.use(cors())
 app.use("/api", authenticationRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
+
 
 
 app.listen(port, () => console.log(`Example app listening on port port!`))
