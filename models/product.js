@@ -27,7 +27,13 @@ const productSchema = new mongoose.Schema({
 
     category : {
         type : ObjectId,
-        ref : "Category"
+        ref : "Category",
+        trim : true
+    },
+    
+    sold : {
+        type : Number,
+        default : 0
     },
 
     picture : {
