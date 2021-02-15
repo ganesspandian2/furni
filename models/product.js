@@ -28,6 +28,7 @@ const productSchema = new mongoose.Schema({
     category : {
         type : ObjectId,
         ref : "Category",
+        required : true,
         trim : true
     },
     
@@ -37,8 +38,8 @@ const productSchema = new mongoose.Schema({
     },
 
     picture : {
-        data : Buffer,
-        contentType : String
+        type : String,
+        required: true
     }
 });
 

@@ -16,13 +16,18 @@ const ProductCart = mongoose.model("ProductCart", ProductCartSchema);
 const OrderSchema = new mongoose.Schema(
   {
     products: [ProductCartSchema],
-    transaction_id: {},
+    // transaction_id: {},
     amount: { type: Number },
     address: String,
     updated: Date,
     user: {
       type: ObjectId,
       ref: "User"
+    },
+    status : {
+      type: String,
+      default: "Ordered",
+      enum : ["Ordered", "Cancelled"]
     }
   },
   { timestamps: true }

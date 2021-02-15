@@ -8,7 +8,7 @@ exports.getProductById = (req, res, next, id) => {
         .exec((err, product) => {
             if (err) {
                 return res.status(400).json({
-                    error : "Error Detected"
+                    error : err
                 })
             }
 
@@ -18,46 +18,16 @@ exports.getProductById = (req, res, next, id) => {
 }
 
 exports.createProduct = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
+    let product = new Product(req.body);
 
-    form.parse(req, (err, fields, file) => {
+    product.save((err, newProduct) => {
         if (err) {
             return res.status(400).json({
-                error : "Unable to Create"
+                error: err
             })
         }
 
-        const {name, description, price, stocks, category} = fields;
-
-        if(!name || !description || !price || !stocks || !category) {
-            return res.status(400).json({
-                error : "MUST NOT BE EMPTY"
-            })
-        }
-
-        let product = new Product(fields);
-
-        if(file.picture) {
-            if(file.picture.size > 5000000) {
-                return res.status(400).json({
-                    error : "Unable to save"
-                })
-            }
-
-            product.picture.data = fs.readFileSync(file.picture.path);
-            product.picture.contentType = file.picture.type;
-        }
-
-        product.save((err, product) => {
-            if (err) {
-                return res.status(400).json({
-                    error : "Process Failed"
-                })
-            }
-
-            res.json(product);
-        })
+        res.json(newProduct);
     })
 }
 
@@ -67,10 +37,7 @@ exports.getProduct = (req, res) => {
 }
 
 exports.getPhoto = (req, res, next) => {
-    if(req.product.picture.data) {
-        res.set("Content-Type", req.product.picture.contentType);
-        return res.send(req.product.picture.data);
-    }
+    res.send(req.product.picture);
 
     next();
 }
@@ -90,41 +57,21 @@ exports.removeProduct = (req, res) => {
 }
 
 exports.updateProduct = (req, res) => {
-    let form = formidable.IncomingForm();
-    form.keepExtensions = true;
+    Product.findByIdAndUpdate(
+        {_id: req.product._id},
+        {$set: req.body},
+        {new: true, useFindAndModify: false},
 
-    form.parse(req, (err, fields, file) => {
-        if (err) {
-            return res.status(400).json({
-                error: "Error Occurred"
-            })
-        }
-
-        let updatedProduct = req.product;
-
-        updatedProduct = lodash.extend(updatedProduct, fields);
-
-        if(file.picture) {
-            if(file.picture.size > 3000000) {
-                return res.json({
-                    message: "Image Size Too Big!!"
-                })
-            }
-
-            updatedProduct.picture.data = fs.readFileSync(file.picture.path);
-            updatedProduct.picture.contentType = file.picture.contentType;
-        }
-
-        updatedProduct.save((err, productUpdated) => {
-            if(err) {
+        (err, updatedProduct) => {
+            if (err) {
                 return res.status(400).json({
-                    message: "Product Saved"
+                    error: "Error Detected"
                 })
             }
 
-            res.json(productUpdated);
-        })
-    })
+            res.json(updatedProduct)
+        }
+    )
 }
 
 exports.getAllProducts = (req, res) => {
@@ -132,7 +79,7 @@ exports.getAllProducts = (req, res) => {
     let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
     Product.find()
-            .select("-photo")
+            .select("-picture")
             .populate("category")
             .limit(limit)
             .sort([[sortBy, "asc"]])
