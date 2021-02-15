@@ -32,6 +32,10 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
 
+app.get('/', function (req, res) {
+    res.send('GET request to homepage')
+  })
+
 
 
 app.listen(port, () => console.log(`Example app listening on port port!`))
