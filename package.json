@@ -1,7 +1,6 @@
 {
   "name": "projbackend",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -26,5 +25,15 @@
     "nodemon": "^2.0.7",
     "npm": "^6.14.11",
     "uuid": "^8.3.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganesspandian2/furni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ganesspandian2/furni/issues"
+  },
+  "homepage": "https://github.com/ganesspandian2/furni#readme",
+  "description": ""
 }

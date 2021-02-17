@@ -10,7 +10,7 @@ router.param("orderId", getOrderById);
 
 router.post("/order/create/:userId", isSignedIn, isAuthenticated, updateOrderHistory, updateStock , createOrder);
 
-router.get("/order/all/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
+router.get("/orders/all/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
 
 router.put("/order/cancel/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin , updateStatus);
 

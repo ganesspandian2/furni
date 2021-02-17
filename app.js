@@ -36,6 +36,25 @@ app.get('/', function (req, res) {
     res.send('GET request to homepage')
   })
 
+app.get('/developerTeam', (req, res) => {
+    res.json({
+        "developerTeam" : [
+            {
+                "name" : "Jeva Vignesh T",
+                "role" : "Flutter Developer",
+                "tech_stack" : "Flutter",
+                "responsibilities" : ["Building Adobe XD UI to view the app", "Building Front end app", "Flutter UI integration with Backend "]
+            },
+            {
+                "name" : "NAVIN GANESH PANDIYAN R K",
+                "role" : "Back-End Developer",
+                "tech_stack" : "MongoDB, NodeJS, ExpressJS",
+                "responsibilities" : ["Built REST-API using NodeJS, ExpressJS and MongoDB", "Deployed MongoDB Atlas on AWS Cloud.", "Deployed Web App on Heroku"]
+            }
+        ]
+    })
+})  
+
 
 
 app.listen(port, () => console.log(`Example app listening on port port!`))
