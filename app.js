@@ -23,6 +23,7 @@ mongoose.connect(process.env.DB_HOST,
 ).then(() => console.log("DB Connected Successfully"));
 
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser())
 app.use(cors())
 
