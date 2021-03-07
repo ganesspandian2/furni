@@ -25,10 +25,7 @@ exports.signup = (req, res) => {
             phoneNumber : user.phoneNumber,
             id : user._id
         });
-
-        
     } )
-
 }
 
 exports.signin = (req, res) => {
