@@ -1,4 +1,4 @@
-# furni
+# FurniKart
 E - Commerce Web Application
 
 
